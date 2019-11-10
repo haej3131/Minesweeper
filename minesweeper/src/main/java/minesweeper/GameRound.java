@@ -12,14 +12,14 @@ import minesweeper.enumeration.SquareState;
 @Data
 public class GameRound
 {
-    private final Square[][]   board;
-    private final int          boardSize;
-    private final int          mineSize;
+    private Square[][]         board;
+    private int                boardSize;
+    private int                mineSize;
     private GameState          gameState;
+    private List<Square>       closedList;
 
     private static final int[] deltaX = { -1, 0, 1, 1, 1, 0, -1, -1 };
     private static final int[] deltaY = { -1, -1, -1, 0, 1, 1, 1, 0 };
-    private final List<Square> closedList;
 
 
 
@@ -37,7 +37,7 @@ public class GameRound
     {
         this.boardSize = boardSize;
         this.mineSize = mineSize;
-        this.gameState = GameState.playing;
+        this.gameState = GameState.PLAYING;
 
         // 판 생성 & 초기화
         this.board = new Square[boardSize][boardSize];
@@ -60,7 +60,6 @@ public class GameRound
 
             if ( -1 != this.board[y][x].getMineNum() )
             {
-                System.out.println("지뢰 : " + y + "," + x);
                 this.board[y][x].putMine(); // 지뢰 설정
                 this.closedList.remove(this.board[y][x]);
 
@@ -72,16 +71,12 @@ public class GameRound
                     if ( -1 != this.board[j][i].getMineNum() )
                     {
                         // 주변지뢰수 값 + 1
-                        System.out.println(j + "," + i);
                         this.board[j][i].hasMineNearby();
                     }
                 }
-                System.out.println();
                 cnt++;
             }
         }
-        System.out.println("cnt" + "=====" + cnt);
-
     }
 
 
@@ -98,14 +93,14 @@ public class GameRound
      */
     public GameState openSquare(final int x, final int y)
     {
-        if ( SquareState.close.equals(this.board[y][x].getState()) )
+        if ( SquareState.CLOSE.equals(this.board[y][x].getState()) )
         {
             this.board[y][x].open();
             this.closedList.remove(this.board[y][x]);
         }
         if ( -1 == this.board[y][x].getMineNum() )
         {
-            this.gameState = GameState.gameover;
+            this.gameState = GameState.GAMEOVER;
         }
         else if ( 0 == this.board[y][x].getMineNum() )
         {
@@ -114,7 +109,7 @@ public class GameRound
 
         if ( this.closedList.size() == 0 )
         {
-            this.gameState = GameState.win;
+            this.gameState = GameState.WIN;
         }
         return this.gameState;
     }
@@ -139,7 +134,7 @@ public class GameRound
             int i = sq.getRow();
             int j = sq.getCol();
             // 대상 검증 : 사방 8개 칸 중 사각형(board) 내 범위에 있는 칸 모두 비어 있는 경우 열기
-            if ( SquareState.close.equals(this.board[j][i].getState()) )
+            if ( SquareState.CLOSE.equals(this.board[j][i].getState()) )
             {
                 this.board[j][i].open();
                 this.closedList.remove(this.board[j][i]);
