@@ -10,7 +10,6 @@ public class Square
 {
     private int         row;
     private int         col;
-    // private boolean isMine;
     private SquareState state;
     private int         mineNum;
 
@@ -22,7 +21,7 @@ public class Square
     {
         this.row = row;
         this.col = col;
-        this.state = SquareState.close;
+        this.state = SquareState.CLOSE;
         this.mineNum = 0;
     }
 
@@ -41,7 +40,7 @@ public class Square
 
     public void open()
     {
-        this.state = SquareState.open;
+        this.state = SquareState.OPEN;
     }
 
 
@@ -50,7 +49,6 @@ public class Square
 
     public void putMine()
     {
-        System.out.println(this.col + ",," + this.row);
         this.mineNum = -1;
     }
 

@@ -13,5 +13,4 @@ public class GameInfo
 {
     private int boardSize;
     private int mineSize;
-
 }

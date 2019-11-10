@@ -35,7 +35,7 @@ public class Game
             {
                 System.out.println("(!) 게임 생성 중 오류가 발생하였습니다..");
                 e.printStackTrace();
-                round.setGameState(GameState.gameover);
+                round.setGameState(GameState.GAMEOVER);
 
             }
             do
@@ -43,12 +43,12 @@ public class Game
 
                 try
                 {
-                    System.out.println("오픈할 칸 입력 ( X , Y ) :                             ... 종료하기 : e");
+                    System.out.println("오픈할 칸 입력 ( X , Y ) : ");
                     String input = sc.nextLine();
                     if ( "e".equals(input.trim()) )
                     {
                         System.out.println("게임 종료..");
-                        round.setGameState(GameState.gameover);
+                        round.setGameState(GameState.GAMEOVER);
                     }
                     if ( !input.contains(",") )
                     {
@@ -71,19 +71,19 @@ public class Game
 
                     // 입력받은 칸 오픈
                     GameState rsltGameSate = round.openSquare(x, y);
-                    if ( GameState.playing.equals(rsltGameSate) )
+                    if ( GameState.PLAYING.equals(rsltGameSate) )
                     {
                         printBoard(round.getBoard());
                     }
                     else
                     {
-                        if ( GameState.win.equals(rsltGameSate) )
+                        if ( GameState.WIN.equals(rsltGameSate) )
                         {
-                            System.out.println("Game win!!!");
+                            System.out.println("You win! :)");
                         }
-                        else if ( GameState.gameover.equals(rsltGameSate) )
+                        else if ( GameState.GAMEOVER.equals(rsltGameSate) )
                         {
-                            System.out.println("Game over!!!");
+                            System.out.println("Game over! :(");
                         }
                         printBoard(round.getBoard(), true);
                         System.out.print("게임을 다시 진행하시겠습니까?(Y/N) ");
@@ -96,10 +96,10 @@ public class Game
                 {
                     System.out.println("(!) 게임 진행 중 오류가 발생하였습니다..");
                     e.printStackTrace();
-                    round.setGameState(GameState.gameover);
+                    round.setGameState(GameState.GAMEOVER);
                 }
             }
-            while ( !GameState.gameover.equals(round.getGameState()) );
+            while ( !GameState.GAMEOVER.equals(round.getGameState()) );
         }
         while ( "Y".equals(restart) );
     }
@@ -149,7 +149,7 @@ public class Game
 
     /**
      * 판 출력
-     * 
+     *
      * @param board
      *            판(이차원 배열)
      */
@@ -164,7 +164,7 @@ public class Game
 
     /**
      * 판 출력
-     * 
+     *
      * @param board판(이차원
      *            배열)
      * @param allPrint
@@ -185,7 +185,7 @@ public class Game
                     {
                         System.out.print(" B ");
                     }
-                    else if ( SquareState.open.equals(row.getState()) )
+                    else if ( SquareState.OPEN.equals(row.getState()) )
                     {
                         System.out.print(" " + row.getMineNum() + " ");
                     }
@@ -196,7 +196,7 @@ public class Game
                 }
                 else
                 {
-                    if ( SquareState.open.equals(row.getState()) )
+                    if ( SquareState.OPEN.equals(row.getState()) )
                     {
                         if ( -1 == row.getMineNum() )
                         {
